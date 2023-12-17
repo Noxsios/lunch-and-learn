@@ -1,0 +1,6 @@
+[book]
+authors = ["razzle"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Lunch and Learn"
