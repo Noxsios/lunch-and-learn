@@ -12,30 +12,39 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install cargo
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-
       - uses: errata-ai/vale-action@reviewdog
 
-      - name: Set up cargo cache
-        uses: actions/cache@v3
-        continue-on-error: false
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-	  key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
+      - name: Install mdbook
+        run: |
+          mkdir mdbook
+          curl -sSL https://github.com/rust-lang/mdBook/releases/download/${{ env.VERSION }}/${{ env.TARGET }}.tar.gz | tar -xz --directory=./mdbook
+          echo `pwd`/mdbook >> $GITHUB_PATH
+       env:
+         VERSION: "v0.4.36"
+         TARGET: "mdbook-v0.4.36-x86_64-unknown-linux-gnu"
 
-      - name: Install deps
-        run: ./deps.sh
-      - name: mdbook Build
-        run: mdbook build
+      - name: Download mdbook-catppuccin
+        run: |
+          curl -sSL https://github.com/catppuccin/mdBook/releases/download/${{ env.VERSION }}/${{ env.TARGET }}.tar.gz | tar -xz
+          echo `pwd`/${{ env.TARGET }} >> $GITHUB_PATH
+        env:
+          VERSION: "v2.1.0"
+          TARGET: "mdbook-catppuccin-x86_64-unknown-linux-gnu"
+
+      - name: Download mdbook-admonish
+        run: |
+          mkdir ${{ env.TARGET }}
+          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/${{ env.VERSION }}/${{ env.TARGET }}.tar.gz | tar -xz --directory=${{ env.TARGET }}
+          echo `pwd`/${{ env.TARGET }} >> $GITHUB_PATH
+        env:
+          VERSION: "v1.13.0"
+          TARGET: "mdbook-admonish-v1.13.0-x86_64-unknown-linux-gnu"
+
+      - name: Build mdBook
+        run: |
+          mdbook-admonish install
+          mdbook-catppuccin install
+          mdbook build
 
       - name: Install Vercel CLI
         run: npm i -g vercel@latest
