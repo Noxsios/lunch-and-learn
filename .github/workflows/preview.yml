@@ -19,7 +19,7 @@ jobs:
           mkdir mdbook
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/${{ env.VERSION }}/${{ env.TARGET }}.tar.gz | tar -xz --directory=./mdbook
           echo `pwd`/mdbook >> $GITHUB_PATH
-       env:
+        env:
          VERSION: "v0.4.36"
          TARGET: "mdbook-v0.4.36-x86_64-unknown-linux-gnu"
 
