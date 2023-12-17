@@ -15,7 +15,7 @@ This syntax won't work in Python 3:
 ```python
 print "Hello, world!"
 ```
-~~
+~~~
 
 ```admonish collapsible=true
 Content will be hidden initially.
