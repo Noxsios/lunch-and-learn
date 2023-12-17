@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-rustup update stable
+# rustup update stable
 
 cargo install mdbook --vers "0.4.36" --locked
 
