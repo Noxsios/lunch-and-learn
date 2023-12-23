@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "build": "bun run index.ts && bun run build:tw && tree public",
+    "build": "bun run index.ts && bun run build:tw",
     "dev": "bun run dev.ts",
     "dev:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --watch --poll",
     "build:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --minify"
