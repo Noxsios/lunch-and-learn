@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en" class="bg-stone-200">
   <head>
     <meta charset="UTF-8" />
@@ -20,8 +19,13 @@
       {{/each}}
     </nav>
     <main class="flex-1 pt-6 pb-6 mb-40">
-      <header class="mx-4 mb-6 prose">
-        <h1 class="border-b-2 border-stone-300">{{title}}</h1>
+      <header class="mx-4 prose lg:prose-xl prose-stone prose-hr:border-stone-300 prose-hr:border-t-2 prose-hr:my-8">
+        <h1>{{title}}</h1>
+        {{#if description}}
+          <p>{{description}}</p>
+        {{/if}}
+        <small>Last modified <strong>{{diff}} ago</strong> by <em>{{by}}</em></small>
+        <hr />
       </header>
       <article class="px-4 prose lg:prose-xl prose-stone prose-hr:border-stone-300 prose-hr:border-t-2 prose-hr:my-8">
         {{{body}}}

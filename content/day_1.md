@@ -1,7 +1,6 @@
 ---
 title: Day 1
 slug: day-1
-date: 2019-01-01
 ---
 
 ## subheader

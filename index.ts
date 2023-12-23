@@ -1,10 +1,12 @@
 import fm from "front-matter";
-import fs from "fs";
+import fs from "node:fs";
 import { glob } from "glob";
 import hbs from "handlebars";
 import path from "path";
 import { preflight } from "./utils";
 import { Env, md } from "./md";
+import ms from "ms";
+import git from "isomorphic-git";
 
 interface Attributes {
   title: string;
@@ -18,7 +20,16 @@ export function reloadTemplate() {
   template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"));
 }
 
-export function main() {
+type LastModified = {
+  filepath: string;
+  diff: string;
+  by: string;
+};
+
+export async function main() {
+  const { stdout } = Bun.spawn(["node", "timestamps.mjs"]);
+  const timestamps: LastModified[] = await new Response(stdout).json();
+
   const files = glob.sync("content/*.md");
   preflight(files);
 
@@ -30,8 +41,9 @@ export function main() {
     return { slug, title };
   });
 
-  for (const file of files) {
-    const fileContent = fs.readFileSync(file, "utf-8");
+  for (const filepath of files) {
+    const fileContent = fs.readFileSync(filepath, "utf-8");
+    const ts = timestamps.find((t) => t.filepath === filepath);
 
     const content = fm(fileContent);
     const attributes = content.attributes as Attributes;
@@ -45,7 +57,7 @@ export function main() {
 
     const html = md.render(content.body, env);
 
-    const result = template({ ...attributes, body: html, routes, toc: env.headers });
+    const result = template({ ...attributes, body: html, routes, toc: env.headers, ...ts });
 
     const filename = path.join("public", `${slug}.html`);
 
@@ -54,5 +66,5 @@ export function main() {
 }
 
 if (import.meta.main) {
-  main();
+  await main();
 }
