@@ -2,29 +2,9 @@ import fm from "front-matter";
 import fs from "fs";
 import { glob } from "glob";
 import hbs from "handlebars";
-import hljs from "highlight.js";
-import markdownit from "markdown-it";
-import anchorit from "markdown-it-anchor";
 import path from "path";
-import { exit } from "process";
 import { preflight } from "./utils";
-
-const md = markdownit({
-  //   html: true,
-  linkify: true,
-  typographer: true,
-  highlight: (str, lang) => {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return hljs.highlight(str, { language: lang }).value;
-      } catch (__) {}
-    }
-
-    return "";
-  },
-}).use(anchorit, {
-  permalink: anchorit.permalink.headerLink(),
-});
+import { Env, md } from "./md";
 
 interface Attributes {
   title: string;
@@ -46,15 +26,12 @@ export function main() {
     const fileContent = fs.readFileSync(file, "utf-8");
     const content = fm(fileContent);
     const attributes = content.attributes as Attributes;
-    const { slug } = attributes;
-    return slug;
+    const { slug, title } = attributes;
+    return { slug, title };
   });
-
-  console.log(routes);
 
   for (const file of files) {
     const fileContent = fs.readFileSync(file, "utf-8");
-    // console.log(pc.cyan(file));
 
     const content = fm(fileContent);
     const attributes = content.attributes as Attributes;
@@ -64,9 +41,11 @@ export function main() {
     // TODO: ensure slug format
     // TODO: ensure date format
 
-    const html = md.render(content.body);
+    let env: Env = {};
 
-    const result = template({ ...attributes, body: html });
+    const html = md.render(content.body, env);
+
+    const result = template({ ...attributes, body: html, routes, toc: env.headers });
 
     const filename = path.join("public", `${slug}.html`);
 

@@ -1,0 +1,37 @@
+<html lang="en" class="bg-stone-200">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link href="/css/tw.css" rel="stylesheet" />
+    <link href="/css/palenight.css" rel="stylesheet" />
+    {{! <script type="module" src="/main.ts"></script> }}
+    <title>{{title}}</title>
+  </head>
+  <body>
+    <a id="skip" href="#_top">Skip to content</a>
+    <nav aria-label="Navigation" class="flex flex-col gap-2 p-2 border-r-2 border-stone-300">
+      {{#each routes}}
+        <a class="hover:underline" href="{{this.slug}}.html">{{this.title}}</a>
+      {{/each}}
+    </nav>
+    <main class="flex-1 pt-6 pb-6 mb-40">
+      <header class="mx-4 mb-6 prose">
+        <h1 class="border-b-2 border-stone-300">{{title}}</h1>
+      </header>
+      <article class="px-4 prose lg:prose-xl prose-stone prose-hr:border-stone-300 prose-hr:border-t-2 prose-hr:my-8">
+        {{{body}}}
+      </article>
+    </main>
+    <nav aria-label="Table of Contents" class="p-2 border-l-2 border-stone-300">
+      <ul>
+        {{#each toc}}
+          <li><a style="--depth: {{this.depth}}" class="hover:underline" href="#{{this.slug}}">{{this.title}}</a></li>
+        {{/each}}
+      </ul>
+    </nav>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "No Tears";
+  src: url("/fonts/No Tears.ttf") format("truetype");
+}
+
+html {
+  font-size: 18px;
+}
+
+body {
+  font-family: "No Tears";
+  font-weight: 400;
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr 3fr;
+  }
+  nav[aria-label="Table of Contents"] {
+    display: none;
+  }
+}
+
+nav[aria-label="Table of Contents"] a {
+  --pad-inline: 0.5rem;
+  padding-inline: calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline)
+}
+
+#skip {
+  clip: rect(0, 0, 0, 0);
+  position: fixed;
+}
+
+@font-face {
+  font-family: "PT Mono";
+  src: url("/fonts/PTMono-Regular.ttf") format("truetype");
+}
+
+pre code {
+  font-family: "PT Mono", monospace;
+}
+
+nav {
+  position: sticky;
+  height: 100vh;
+  top: 0;
+}
