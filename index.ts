@@ -4,7 +4,7 @@ import { glob } from "glob";
 import hbs from "handlebars";
 import path from "path";
 import { preflight } from "./utils";
-import { Env, md } from "./md";
+import { Env, md, slugify } from "./md";
 import ms from "ms";
 import git from "isomorphic-git";
 
@@ -24,22 +24,31 @@ type LastModified = {
   filepath: string;
   diff: string;
   by: string;
+  raw: number;
 };
 
 export async function main() {
   const { stdout } = Bun.spawn(["node", "timestamps.mjs"]);
   const timestamps: LastModified[] = await new Response(stdout).json();
 
-  const files = glob.sync("content/*.md");
+  const files = glob.sync(path.join("content", "*.md"));
   preflight(files);
 
-  const routes = files.map((file) => {
-    const fileContent = fs.readFileSync(file, "utf-8");
-    const content = fm(fileContent);
-    const attributes = content.attributes as Attributes;
-    const { slug, title } = attributes;
-    return { slug, title };
-  });
+  const routes = timestamps
+    .sort((a, b) => {
+      // ensure content/_index.md is always first
+      if (a.filepath === path.join("content", "_index.md")) {
+        return -1;
+      }
+      return a.raw - b.raw;
+    })
+    .map((t) => {
+      const fileContent = fs.readFileSync(t.filepath, "utf-8");
+      const content = fm(fileContent);
+      const attributes = content.attributes as Attributes;
+      const { slug, title } = attributes;
+      return { slug, title };
+    });
 
   for (const filepath of files) {
     const fileContent = fs.readFileSync(filepath, "utf-8");
@@ -47,11 +56,14 @@ export async function main() {
 
     const content = fm(fileContent);
     const attributes = content.attributes as Attributes;
-    const { slug } = attributes;
 
-    // TODO: ensure title always exists
-    // TODO: ensure slug format
-    // TODO: ensure date format
+    if (!attributes.title) {
+      throw new Error(`Missing title in ${filepath}`);
+    }
+    if (!attributes.slug) {
+      throw new Error(`Missing slug in ${filepath}`);
+    }
+    attributes.slug = slugify(attributes.slug);
 
     let env: Env = {};
 
@@ -59,7 +71,7 @@ export async function main() {
 
     const result = template({ ...attributes, body: html, routes, toc: env.headers, ...ts });
 
-    const filename = path.join("public", `${slug}.html`);
+    const filename = path.join("public", `${attributes.slug}.html`);
 
     fs.writeFileSync(filename, result);
   }

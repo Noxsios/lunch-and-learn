@@ -20,7 +20,7 @@ export const md = markdownit({
   })
   .use(extractHeadersPlugin);
 
-const slugify = (s: string): string => {
+export const slugify = (s: string): string => {
   return encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-"));
 };
 

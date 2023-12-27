@@ -1,4 +1,4 @@
-<html lang="en" class="bg-stone-200">
+<html lang="en" class="bg-zinc-200">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,13 +13,13 @@
   </head>
   <body>
     <a id="skip" href="#_top">Skip to content</a>
-    <nav aria-label="Navigation" class="flex flex-col gap-2 p-2 border-r-2 border-stone-300">
+    <nav aria-label="Navigation" class="flex flex-col gap-2 p-2 border-r-2 border-zinc-300">
       {{#each routes}}
-        <a class="hover:underline" href="{{this.slug}}.html">{{this.title}}</a>
+        <a class="hover:underline w-fit" href="{{this.slug}}.html">{{this.title}}</a>
       {{/each}}
     </nav>
     <main class="flex-1 pt-6 pb-6 mb-40">
-      <header class="mx-4 prose lg:prose-xl prose-stone prose-hr:border-stone-300 prose-hr:border-t-2 prose-hr:my-8">
+      <header class="mx-4 prose lg:prose-xl prose-hr:border-zinc-300 prose-hr:border-t-2 prose-hr:my-8">
         <h1>{{title}}</h1>
         {{#if description}}
           <p>{{description}}</p>
@@ -27,11 +27,11 @@
         <small>Last modified <strong>{{diff}} ago</strong> by <em>{{by}}</em></small>
         <hr />
       </header>
-      <article class="px-4 prose lg:prose-xl prose-stone prose-hr:border-stone-300 prose-hr:border-t-2 prose-hr:my-8">
+      <article class="px-4 prose sm:prose-sm lg:prose-xl prose-hr:border-zinc-300 prose-hr:border-t-2 prose-hr:my-8">
         {{{body}}}
       </article>
     </main>
-    <nav aria-label="Table of Contents" class="p-2 border-l-2 border-stone-300">
+    <nav aria-label="Table of Contents" class="p-2 border-l-2 border-zinc-300">
       <ul>
         {{#each toc}}
           <li><a style="--depth: {{this.depth}}" class="hover:underline" href="#{{this.slug}}">{{this.title}}</a></li>
