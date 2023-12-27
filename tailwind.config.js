@@ -32,10 +32,13 @@ export default {
               paddingLeft: em(10, 18),
               paddingRight: em(10, 18),
             },
+            "pre code": {
+              fontFamily: '"PT Mono", monospace',
+            },
             hr: {
               borderTopWidth: "2px",
-              marginTop: rem(32),
-              marginBottom: rem(32),
+              marginTop: em(20, 14),
+              marginBottom: em(20, 14),
             },
             kbd: {
               borderRadius: "0 !important", // need to investigate why needed to override w/ !important
