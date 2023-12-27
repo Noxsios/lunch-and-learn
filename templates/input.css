@@ -7,29 +7,20 @@
   src: url("/fonts/No Tears.ttf") format("truetype");
 }
 
-html {
-  font-size: 18px;
+@font-face {
+  font-family: "PT Mono";
+  src: url("/fonts/PTMono-Regular.ttf") format("truetype");
 }
 
 body {
-  font-family: "No Tears";
-  font-weight: 400;
+  font-family: "No Tears", sans-serif;
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
+@media (max-width: 1280px) {
   body {
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: minmax(10rem, 1fr) 3fr;
   }
   nav[aria-label="Table of Contents"] {
     display: none;
@@ -38,7 +29,7 @@ h6 {
 
 nav[aria-label="Table of Contents"] a {
   --pad-inline: 0.5rem;
-  padding-inline: calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline)
+  padding-inline: calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline);
 }
 
 #skip {
@@ -46,17 +37,9 @@ nav[aria-label="Table of Contents"] a {
   position: fixed;
 }
 
-@font-face {
-  font-family: "PT Mono";
-  src: url("/fonts/PTMono-Regular.ttf") format("truetype");
-}
-
-pre code {
-  font-family: "PT Mono", monospace;
-}
-
 nav {
   position: sticky;
   height: 100vh;
   top: 0;
+  font-size: large;
 }

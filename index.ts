@@ -5,8 +5,7 @@ import hbs from "handlebars";
 import path from "path";
 import { preflight } from "./utils";
 import { Env, md, slugify } from "./md";
-import ms from "ms";
-import git from "isomorphic-git";
+import esbuild from "esbuild";
 
 interface Attributes {
   title: string;
@@ -33,6 +32,20 @@ export async function main() {
 
   const files = glob.sync(path.join("content", "*.md"));
   preflight(files);
+
+  await esbuild.build({
+    entryPoints: ["templates/main.ts"],
+    format: "esm",
+    bundle: true,
+    outfile: "public/main.js",
+    minify: true,
+    sourcemap: true,
+    target: "esnext",
+    platform: "browser",
+    define: {
+      "process.env.NODE_ENV": '"production"',
+    },
+  })
 
   const routes = timestamps
     .sort((a, b) => {

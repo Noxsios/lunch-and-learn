@@ -8,7 +8,7 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link href="/css/tw.css" rel="stylesheet" />
     <link href="/css/palenight.css" rel="stylesheet" />
-    {{! <script type="module" src="/main.ts"></script> }}
+    <script type="module" defer src="/main.js"></script>
     <title>{{title}}</title>
   </head>
   <body>
@@ -19,15 +19,13 @@
       {{/each}}
     </nav>
     <main class="flex-1 pt-6 pb-6 mb-40">
-      <header class="mx-4 prose lg:prose-xl prose-hr:border-zinc-300 prose-hr:border-t-2 prose-hr:my-8">
+      <article class="px-4 prose sm:prose-sm md:prose-lg lg:prose-xl">
         <h1>{{title}}</h1>
         {{#if description}}
           <p>{{description}}</p>
         {{/if}}
-        <small>Last modified <strong>{{diff}} ago</strong> by <em>{{by}}</em></small>
+        <small>Last modified <strong id="timeago">{{diff}}</strong> by <em>{{by}}</em></small>
         <hr />
-      </header>
-      <article class="px-4 prose sm:prose-sm lg:prose-xl prose-hr:border-zinc-300 prose-hr:border-t-2 prose-hr:my-8">
         {{{body}}}
       </article>
     </main>
