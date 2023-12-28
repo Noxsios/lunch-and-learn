@@ -4,7 +4,7 @@ import pc from "picocolors"
 
 // Initialize watcher.
 const watcher = chokidar.watch(["templates", "static", "content"], {
-  ignored: /(^|[\/\\])\../, // ignore dotfiles
+  ignored: /^\./, // ignore dotfiles
   persistent: true,
 })
 

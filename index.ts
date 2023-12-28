@@ -77,7 +77,7 @@ export async function main() {
     }
     attributes.slug = slugify(attributes.slug)
 
-    let env: Env = {}
+    const env: Env = {}
 
     const html = md.render(content.body, env)
 

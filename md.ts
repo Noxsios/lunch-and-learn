@@ -1,6 +1,7 @@
 import hljs from "highlight.js"
 import markdownit from "markdown-it"
 import anchor from "markdown-it-anchor"
+import pc from "picocolors"
 
 export const md = markdownit({
   linkify: true,
@@ -9,7 +10,10 @@ export const md = markdownit({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return hljs.highlight(str, { language: lang }).value
-      } catch (__) {}
+      } catch (e) {
+        console.log(pc.red(`Error highlighting code: ${e}`))
+        return ""
+      }
     }
 
     return ""

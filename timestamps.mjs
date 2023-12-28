@@ -14,7 +14,6 @@ const files = glob.sync(path.join("content", "*.md"))
 let stdout = []
 
 for (const filepath of files) {
-  const now = new Date().getTime()
   const dir = "."
   let latestCommit
   try {
