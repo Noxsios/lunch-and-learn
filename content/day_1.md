@@ -8,7 +8,7 @@ slug: day-1
 some content
 
 ```javascript
-console.log('hello world');
+console.log("hello world")
 ```
 
 > why hello there

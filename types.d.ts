@@ -1,1 +1,1 @@
-declare module "ms";
+declare module "ms"

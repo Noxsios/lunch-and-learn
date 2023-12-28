@@ -4,36 +4,36 @@ with the native fs module.
 
 Its a bit of a hack and pretty ugly, but w/e.
 */
-import git from "isomorphic-git";
-import fs from "node:fs";
-import { glob } from "glob";
-import ms from "ms";
-import path from "node:path";
+import git from "isomorphic-git"
+import fs from "node:fs"
+import { glob } from "glob"
+import ms from "ms"
+import path from "node:path"
 
-const files = glob.sync(path.join("content", "*.md"));
+const files = glob.sync(path.join("content", "*.md"))
 
-let stdout = [];
+let stdout = []
 
 for (const filepath of files) {
-  const now = new Date().getTime();
-  const dir = ".";
-  let latestCommit;
+  const now = new Date().getTime()
+  const dir = "."
+  let latestCommit
   try {
-    latestCommit = await git.log({ fs, dir, filepath, depth: 1 }).then((log) => log[0].commit);
+    latestCommit = await git.log({ fs, dir, filepath, depth: 1 }).then((log) => log[0].commit)
   } catch (err) {
     if (err instanceof git.Errors.NotFoundError) {
-      continue;
+      continue
     }
-    throw err;
+    throw err
   }
-  const by = latestCommit.author.name;
-  const timestamp = latestCommit.author.timestamp;
+  const by = latestCommit.author.name
+  const timestamp = latestCommit.author.timestamp
 
-  const then = new Date(timestamp * 1000).getTime();
+  const then = new Date(timestamp * 1000).getTime()
 
-  const diff = ms(now - then, { long: true });
+  const diff = ms(now - then, { long: true })
 
-  stdout = [...stdout, { filepath, diff, by, raw: timestamp }];
+  stdout = [...stdout, { filepath, diff, by, raw: timestamp }]
 }
 
-console.log(JSON.stringify(stdout, null, 2));
+console.log(JSON.stringify(stdout, null, 2))
