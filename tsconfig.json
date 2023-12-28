@@ -1,8 +1,5 @@
 {
-  "include": [
-    "**/*",
-    "templates/**/*",
-  ],
+  "include": ["**/*", "templates/**/*"],
   "compilerOptions": {
     "lib": ["ESNext"],
     "module": "esnext",
