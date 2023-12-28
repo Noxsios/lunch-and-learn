@@ -7,7 +7,6 @@ Its a bit of a hack and pretty ugly, but w/e.
 import git from "isomorphic-git"
 import fs from "node:fs"
 import { glob } from "glob"
-import ms from "ms"
 import path from "node:path"
 
 const files = glob.sync(path.join("content", "*.md"))
@@ -31,9 +30,7 @@ for (const filepath of files) {
 
   const then = new Date(timestamp * 1000).getTime()
 
-  const diff = ms(now - then, { long: true })
-
-  stdout = [...stdout, { filepath, diff, by, raw: timestamp }]
+  stdout = [...stdout, { filepath, then, by }]
 }
 
 console.log(JSON.stringify(stdout, null, 2))

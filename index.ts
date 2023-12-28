@@ -21,9 +21,8 @@ export function reloadTemplate() {
 
 type LastModified = {
   filepath: string
-  diff: string
+  then: number
   by: string
-  raw: number
 }
 
 export async function main() {
@@ -53,7 +52,7 @@ export async function main() {
       if (a.filepath === path.join("content", "_index.md")) {
         return -1
       }
-      return a.raw - b.raw
+      return a.then - b.then
     })
     .map((t) => {
       const fileContent = fs.readFileSync(t.filepath, "utf-8")

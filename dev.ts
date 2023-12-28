@@ -14,7 +14,6 @@ if (import.meta.main) {
   // Something to use when events are received.
   // Add event listeners.
   watcher.on("change", (path) => {
-    //   console.log("change", path);
     const now = new Date()
     if (path === "templates/layout.hbs") {
       reloadTemplate()
