@@ -7,10 +7,9 @@ import { preflight } from "./utils"
 import { Env, md, slugify } from "./md"
 import esbuild from "esbuild"
 
-interface Attributes {
+interface CustomFrontmatter {
   title: string
   slug: string
-  date: string
 }
 
 let template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
@@ -57,9 +56,11 @@ export async function main() {
     .map((t) => {
       const fileContent = fs.readFileSync(t.filepath, "utf-8")
       const content = fm(fileContent)
-      const attributes = content.attributes as Attributes
-      const { slug, title } = attributes
-      return { slug, title }
+      const attributes = content.attributes as CustomFrontmatter
+      if (attributes.slug === "index") {
+        attributes.slug = ""
+      }
+      return attributes
     })
 
   for (const filepath of files) {
@@ -67,7 +68,7 @@ export async function main() {
     const ts = timestamps.find((t) => t.filepath === filepath)
 
     const content = fm(fileContent)
-    const attributes = content.attributes as Attributes
+    const attributes = content.attributes as CustomFrontmatter
 
     if (!attributes.title) {
       throw new Error(`Missing title in ${filepath}`)
@@ -89,9 +90,16 @@ export async function main() {
       ...ts,
     })
 
-    const filename = path.join("public", `${attributes.slug}.html`)
+    if (attributes.slug === "index") {
+      fs.writeFileSync(path.join("public", "index.html"), result)
+      continue
+    }
 
-    fs.writeFileSync(filename, result)
+    const routeDir = path.join("public", attributes.slug)
+
+    fs.mkdirSync(routeDir)
+
+    fs.writeFileSync(path.join(routeDir, "index.html"), result)
   }
 }
 
