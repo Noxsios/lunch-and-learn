@@ -3,10 +3,26 @@ import ms from "ms"
 const $ = document.querySelector.bind(document)
 // const $$ = document.querySelectorAll.bind(document)
 
-const now = new Date().getTime()
+const current = localStorage.getItem("theme") || "light"
+document.documentElement.setAttribute("data-theme", current)
 
-const then = new Date(Number($("#timeago")!.textContent!)).getTime()
+const toggleTheme = () => {
+  const theme = document.documentElement.getAttribute("data-theme")
+  const next = theme === "light" ? "dim" : "light"
+  document.documentElement.setAttribute("data-theme", next)
+  localStorage.setItem("theme", next)
+}
 
-$("#timeago")!.textContent = ms(now - then, {
-  long: true,
+document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = $("#theme-toggle") as HTMLInputElement
+  themeToggle!.checked = current === "dim"
+  themeToggle!.addEventListener("click", toggleTheme)
+
+  const now = new Date().getTime()
+
+  const then = new Date(Number($("#timeago")!.textContent!)).getTime()
+
+  $("#timeago")!.textContent = ms(now - then, {
+    long: true,
+  })
 })
