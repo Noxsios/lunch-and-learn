@@ -18,7 +18,7 @@
         "type": "div",
         "props": {
           "style": { "display": "flex", "fontSize": "5.625rem", "lineHeight": "7.5rem" },
-          "children": "{{title}}"
+          "children": "{{{title}}}"
         }
       },
       {
