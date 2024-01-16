@@ -17,6 +17,9 @@ for (const file of files) {
   const fileContent = fs.readFileSync(file, "utf-8")
   const content = fm(fileContent)
   const attributes = content.attributes as CustomFrontmatter
+  if (attributes.slug === "index") {
+    attributes.title = "Lunch & Learn"
+  }
   const rendered = template({
     title: attributes.title,
   })

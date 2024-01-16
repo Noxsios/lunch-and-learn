@@ -82,7 +82,11 @@ export async function main() {
 
     const html = md.render(content.body, env)
 
-    const ogURL = `https://lunch.razzle.cloud/${attributes.slug}/og.svg`
+    let ogURL = `https://lunch.razzle.cloud/${attributes.slug}/og.svg`
+
+    if (attributes.slug === "index") {
+      ogURL = `https://lunch.razzle.cloud/og.svg`
+    }
 
     const result = template({
       ...attributes,
