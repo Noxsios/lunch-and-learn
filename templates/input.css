@@ -25,3 +25,7 @@ nav[aria-label="Table of Contents"] a {
   clip: rect(0, 0, 0, 0);
   position: fixed;
 }
+
+.flexible-article {
+  min-width: 65ch;
+}
