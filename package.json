@@ -3,7 +3,7 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "build": "bun run index.ts && bun run build:tw",
+    "build": "bun run index.ts && bun run build:tw && bun run gen.ts",
     "dev": "bun run dev.ts",
     "dev:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --watch --poll",
     "build:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --minify",
@@ -31,6 +31,7 @@
     "markdownlint-cli2": "^0.12.1",
     "picocolors": "^1.0.0",
     "prettier": "^3.1.1",
+    "satori": "^0.10.11",
     "tailwindcss": "^3.3.7"
   },
   "peerDependencies": {

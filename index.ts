@@ -7,7 +7,7 @@ import { preflight } from "./utils"
 import { Env, md, slugify } from "./md"
 import esbuild from "esbuild"
 
-interface CustomFrontmatter {
+export interface CustomFrontmatter {
   title: string
   slug: string
 }
