@@ -42,13 +42,15 @@ As mentioned earlier, I use `zola` for my blog. I really like the simplicity of 
 ├── README.md
 ├── bun.lockb            # lockfile for bun
 ├── content              # markdown files
-├── *.ts|mjs             # typescript build system
+├── generator/*.ts|mjs   # typescript build system
 ├── package.json
 ├── static               # static assets (images, manifest, etc)
 ├── tailwind.config.js   # tailwind config
 ├── templates            # html templates + css and TS entrypoints
 └── tsconfig.json        # typescript compiler config
 ```
+
+In college I made slide decks using `reveal.js` and hosting via GitHub pages. I actually would just submit the URL to the professor. Here's a report on Gettysburg: <https://noxsios.github.io/gettysburg/>.
 
 One of the final projects I wrote for [Platform One](https://p1.dso.mil) was the documentation compiler that powers [Big Bang's docs](https://docs-bigbang.dso.mil) (it's still going strong 1+ years later!).
 
@@ -67,6 +69,7 @@ More recently, I was looking at themes for Zola and came across [adidoks](https:
 ## Core features
 
 - Markdown parsing
+- Content as either a blog post or a slide deck
 - Templating
 - Git integration
 - Simple layout
