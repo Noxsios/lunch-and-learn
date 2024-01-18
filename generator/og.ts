@@ -6,7 +6,7 @@ import path from "path"
 import { CustomFrontmatter } from "./index"
 import satori from "satori"
 
-const template = hbs.compile(fs.readFileSync("imagegen.json", "utf-8"))
+const template = hbs.compile(fs.readFileSync("generator/og.json", "utf-8"))
 
 const files = glob.sync(path.join("content", "*.md"))
 

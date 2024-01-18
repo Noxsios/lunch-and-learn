@@ -13,11 +13,7 @@ export interface CustomFrontmatter {
   layout: "default" | "slides"
 }
 
-let template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
-
-export function reloadTemplate() {
-  template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
-}
+const template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
 
 type LastModified = {
   filepath: string
@@ -25,7 +21,7 @@ type LastModified = {
   by: string
 }
 
-export async function main() {
+async function main() {
   const { stdout } = Bun.spawn(["node", "timestamps.mjs"])
   const timestamps: LastModified[] = await new Response(stdout).json()
 

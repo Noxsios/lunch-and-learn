@@ -1,11 +1,9 @@
 {
   "name": "lunch-and-learn",
-  "module": "index.ts",
+  "module": "generator/index.ts",
   "type": "module",
   "scripts": {
-    "build": "bun run index.ts && bun run build:tw && bun run gen.ts",
-    "dev": "bun run dev.ts",
-    "dev:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --watch --poll",
+    "build": "bun run generator/index.ts && bun run build:tw && bun run generator/og.ts",
     "build:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --minify",
     "lint": "eslint . && prettier --check . && markdownlint-cli2 .",
     "lint:fix": "prettier --write . && markdownlint-cli2-fix ."
@@ -17,7 +15,6 @@
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
     "bun-types": "latest",
-    "chokidar": "^3.5.3",
     "daisyui": "^4.6.0",
     "esbuild": "^0.19.10",
     "eslint": "^8.56.0",
