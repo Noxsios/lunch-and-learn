@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.reveal-viewport {
-  /* investigate why !important is needed */
-  background: var(--fallback-b1,oklch(var(--b1)/1)) !important;
-  background-color: var(--fallback-b1,oklch(var(--b1)/1)) !important;
-}
-
 @font-face {
   font-family: "Neon";
   src:
@@ -23,6 +17,22 @@
 
 body {
   font-family: "Neon", sans-serif;
+}
+
+.reveal-viewport {
+  /* investigate why !important is needed */
+  background: var(--fallback-b1, oklch(var(--b1) / 1)) !important;
+  color:  var(--tw-prose-body) !important;
+  background-color: var(--fallback-b1, oklch(var(--b1) / 1)) !important;
+}
+
+.reveal li {
+  text-align: left;
+}
+
+.reveal img {
+  max-width: 50%;
+  margin: 0 auto;
 }
 
 nav[aria-label="Table of Contents"] a {
