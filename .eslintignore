@@ -1,0 +1,20 @@
+/node_modules
+/config.js
+/coverage
+/dist
+/tmp
+.DS_Store
+.cache
+/*.log
+package.json
+**/__fixtures__/
+**/__mocks__/
+.clinic/
+.eslintcache
+
+# generated code
+**/*.generated.ts
+/tools/dist
+/patches
+**/tmp/
+/public
