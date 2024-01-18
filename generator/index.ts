@@ -32,6 +32,7 @@ async function main() {
   }
   const template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
   hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+    // @ts-expect-error "this" is implicitly any because of the way handlebars works
     return arg1 === arg2 ? options.fn(this) : options.inverse(this)
   })
 

@@ -24,3 +24,4 @@ package.json
 # ignoring for now
 .markdownlint-cli2.jsonc
 content/*.md
+*.hbs

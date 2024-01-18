@@ -19,6 +19,7 @@
     "esbuild": "^0.19.10",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-html": "^7.1.0",
     "front-matter": "^4.0.2",
     "glob": "^10.3.10",
     "handlebars": "^4.7.8",
