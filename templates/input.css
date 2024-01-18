@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @font-face {
-  font-family: "Neon";
-  src: url("/fonts/MonaspaceArgon-Regular.woff") format("woff2");
-} */
+.reveal-viewport {
+  /* investigate why !important is needed */
+  background: var(--fallback-b1,oklch(var(--b1)/1)) !important;
+  background-color: var(--fallback-b1,oklch(var(--b1)/1)) !important;
+}
 
 @font-face {
   font-family: "Neon";
