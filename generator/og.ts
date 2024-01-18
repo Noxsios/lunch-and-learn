@@ -11,7 +11,7 @@ const mono = fs.readFileSync("static/fonts/PTMono-Regular.ttf")
 if (import.meta.main) {
   const title = "Lunch & Learn"
 
-  const rendered = template({title})
+  const rendered = template({ title })
 
   const json = JSON.parse(rendered)
   const svg = await satori(json, {

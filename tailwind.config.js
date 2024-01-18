@@ -11,11 +11,11 @@ export default {
           css: {
             "pre code": {
               fontFamily: '"PT Mono", monospace',
-            }
-          }
-        }
-      }
-    }
+            },
+          },
+        },
+      },
+    },
   },
   plugins: [typography, daisyui],
   daisyui: {
