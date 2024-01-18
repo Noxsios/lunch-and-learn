@@ -40,7 +40,7 @@ attempted an invasion of the North, one of General Robert E. Lee's few disastrou
 - Commander of the Confederate States Army during the American Civil War.
 - Lee displayed "expert use of the Napoleonic turning movement as described by Antoine de Jomini".
 - Goal was to bring the North to the peace negotiating table through costly defeats in Northern territory.
-- "Became so engrossed with the tactical details and the possibility of achieving an Austerlitz 
+- "Became so engrossed with the tactical details and the possibility of achieving an Austerlitz
 that he lost his focus on directing a campaign linked to political ends."
 - Sought to achieve a strategic and operational objective through a single tactical victory.
 
@@ -113,7 +113,7 @@ This battle was lost due to misuse and misunderstanding the Principles of War.
   - Day 1 attempted to seize viable high ground and organize
   - Day 2 attacked both flanks, nearly succeeding
   - Day 3 attack the center
-- Lee chose to fight Gettysburg knowing that the North had the superior ground, 
+- Lee chose to fight Gettysburg knowing that the North had the superior ground,
 he failed to `Manuever` his forces into a advantageous position.
 - The Confederate forces, following the death of General "Stonewall" Jackson, had many newly promoted officers
   - They lacked solid `Unity of Command`

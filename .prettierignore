@@ -20,3 +20,7 @@ package.json
 /patches
 **/tmp/
 /public
+
+# ignoring for now
+.markdownlint-cli2.jsonc
+content/*.md
