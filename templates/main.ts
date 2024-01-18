@@ -1,7 +1,7 @@
 import ms from "ms"
 
-const $ = document.querySelector.bind(document)
-// const $$ = document.querySelectorAll.bind(document)
+export const $ = document.querySelector.bind(document)
+export const $$ = document.querySelectorAll.bind(document)
 
 const current = localStorage.getItem("theme") || "light"
 document.documentElement.setAttribute("data-theme", current)

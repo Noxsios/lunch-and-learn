@@ -10,7 +10,7 @@ const template = hbs.compile(fs.readFileSync("imagegen.json", "utf-8"))
 
 const files = glob.sync(path.join("content", "*.md"))
 
-const noTears = fs.readFileSync("static/fonts/No Tears.ttf")
+const neon = fs.readFileSync("static/fonts/MonaspaceNeon-Regular.woff")
 const mono = fs.readFileSync("static/fonts/PTMono-Regular.ttf")
 
 for (const file of files) {
@@ -31,7 +31,7 @@ for (const file of files) {
     fonts: [
       {
         name: "No Tears",
-        data: noTears,
+        data: neon,
         style: "normal",
       },
       {

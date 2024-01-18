@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,11 +10,12 @@
     <link rel="manifest" href="/site.webmanifest" />
     <link href="/css/tw.css" rel="stylesheet" />
     <link href="/css/palenight.css" rel="stylesheet" />
+    {{#if raw}}<link href="/reveal.css" rel="stylesheet" />{{/if}}
     <script type="module" defer src="/main.js"></script>
   </head>
   <body>
     <a id="skip" href="#_top">Skip to content</a>
-    <nav class="navbar">
+    <nav class="navbar mx-auto max-w-[70rem]">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
@@ -66,13 +66,35 @@
           by
           <em>{{by}}</em></small>
         <hr />
-        {{{body}}}
+        {{#if body}}
+          {{{body}}}
+        {{/if}}
+        {{#if raw}}
+          <div class="reveal">
+            <div class="slides">
+              <section
+                data-markdown
+                data-separator="^\r?\n-----\r?\n$"
+                data-separator-vertical="^\r?\n---\r?\n$"
+                data-notes="^Notes:"
+                data-charset="utf-8"
+              >
+                <textarea data-template>
+                  {{{raw}}}
+                </textarea>
+              </section>
+            </div>
+          </div>
+          <script type="module" src="/reveal.js"></script>
+        {{/if}}
       </article>
-      <nav aria-label="Table of Contents" class="sticky flex flex-col h-full gap-2 p-2 mr-auto text-xl top-2">
-        <h3 class="uppercase select-none">on this page</h3>
-        {{#each toc}}
-          <a style="--depth: {{this.depth}}" class="hover:link w-fit" href="#{{this.slug}}">{{this.title}}</a>
-        {{/each}}
+      <nav aria-label="Table of Contents" class="sticky flex flex-col h-full gap-2 p-2 mr-auto top-2">
+        {{#if toc}}
+          <h3 class="uppercase select-none">on this page</h3>
+          {{#each toc}}
+            <a style="--depth: {{this.depth}}" class="hover:link w-fit" href="#{{this.slug}}">{{this.title}}</a>
+          {{/each}}
+        {{/if}}
       </nav>
     </main>
   </body>

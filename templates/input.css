@@ -2,9 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @font-face {
+  font-family: "Neon";
+  src: url("/fonts/MonaspaceArgon-Regular.woff") format("woff2");
+} */
+
 @font-face {
-  font-family: "No Tears";
-  src: url("/fonts/No Tears.ttf") format("truetype");
+  font-family: "Neon";
+  src: url("/fonts/MonaspaceNeonVarVF[wght,wdth,slnt].woff2") format("woff2 supports variations"),
+       url("/fonts/MonaspaceNeonVarVF[wght,wdth,slnt].woff2") format("woff2-variations");
+  font-weight: 100 1000;
 }
 
 @font-face {
@@ -13,7 +20,7 @@
 }
 
 body {
-  font-family: "No Tears", sans-serif;
+  font-family: "Neon", sans-serif;
 }
 
 nav[aria-label="Table of Contents"] a {

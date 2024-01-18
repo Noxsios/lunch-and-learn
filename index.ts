@@ -10,6 +10,7 @@ import esbuild from "esbuild"
 export interface CustomFrontmatter {
   title: string
   slug: string
+  layout: "default" | "slides"
 }
 
 let template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
@@ -36,6 +37,20 @@ export async function main() {
     format: "esm",
     bundle: true,
     outfile: "public/main.js",
+    minify: true,
+    sourcemap: true,
+    target: "esnext",
+    platform: "browser",
+    define: {
+      "process.env.NODE_ENV": '"production"',
+    },
+  })
+
+  await esbuild.build({
+    entryPoints: ["templates/reveal.ts"],
+    format: "esm",
+    bundle: true,
+    outfile: "public/reveal.js",
     minify: true,
     sourcemap: true,
     target: "esnext",
@@ -78,24 +93,36 @@ export async function main() {
     }
     attributes.slug = slugify(attributes.slug)
 
-    const env: Env = {}
-
-    const html = md.render(content.body, env)
-
     let ogURL = `https://lunch.razzle.cloud/${attributes.slug}/og.svg`
 
     if (attributes.slug === "index") {
       ogURL = `https://lunch.razzle.cloud/og.svg`
     }
 
-    const result = template({
+    let result = ""
+    const meta = {
       ...attributes,
-      body: html,
       routes,
-      toc: env.headers,
       ogURL,
       ...ts,
-    })
+    }
+
+    if (!attributes.layout || attributes.layout === "default") {
+      const env: Env = {}
+      const html = md.render(content.body, env)
+
+      result = template({
+        ...meta,
+        ...env,
+        body: html,
+        toc: env.headers,
+      })
+    } else if (attributes.layout === "slides") {
+      result = template({
+        ...meta,
+        raw: content.body,
+      })
+    }
 
     if (attributes.slug === "index") {
       fs.writeFileSync(path.join("public", "index.html"), result)
