@@ -9,7 +9,6 @@ import "reveal.js/dist/reveal.css"
 const deck = new Reveal({
   hash: true,
   embedded: true,
-  center: true,
 
   // Learn about plugins: https://revealjs.com/plugins/
   plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom],
