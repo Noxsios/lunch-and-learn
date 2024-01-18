@@ -18,7 +18,7 @@ Navigate using your arrow keys. If you see a &#8681; in the bottom right nav the
 
 ## Nice!
 
-To view all slides press the `ESC` key, otherwise press `>` to move to the next slide.
+To view all slides press the `O` key, otherwise press `>` to move to the next slide.
 
 -----
 

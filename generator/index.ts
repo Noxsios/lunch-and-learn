@@ -3,7 +3,8 @@ import fs from "node:fs"
 import { glob } from "glob"
 import hbs from "handlebars"
 import path from "path"
-import { preflight } from "./utils"
+import pc from "picocolors"
+import { exit } from "process"
 import { Env, md, slugify } from "./md"
 import esbuild from "esbuild"
 
@@ -13,8 +14,6 @@ export interface CustomFrontmatter {
   layout: "default" | "slides"
 }
 
-const template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
-
 type LastModified = {
   filepath: string
   then: number
@@ -22,31 +21,44 @@ type LastModified = {
 }
 
 async function main() {
-  const { stdout } = Bun.spawn(["node", "timestamps.mjs"])
+  const { stdout } = Bun.spawn(["node", "generator/timestamps.mjs"])
   const timestamps: LastModified[] = await new Response(stdout).json()
 
-  const files = glob.sync(path.join("content", "*.md"))
-  preflight(files)
-
-  await esbuild.build({
-    entryPoints: ["templates/main.ts"],
-    format: "esm",
-    bundle: true,
-    outfile: "public/main.js",
-    minify: true,
-    sourcemap: true,
-    target: "esnext",
-    platform: "browser",
-    define: {
-      "process.env.NODE_ENV": '"production"',
-    },
+  const partials = glob.sync("templates/partials/*.hbs")
+  for (const filepath of partials) {
+    const name = path.basename(filepath, ".hbs")
+    const partial = hbs.compile(fs.readFileSync(filepath, "utf-8"))
+    hbs.registerPartial(name, partial)
+  }
+  const template = hbs.compile(fs.readFileSync("templates/layout.hbs", "utf-8"))
+  hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+    return arg1 === arg2 ? options.fn(this) : options.inverse(this)
   })
 
+  const files = glob.sync(path.join("content", "*.md"))
+
+  if (files.length === 0) {
+    console.log(pc.blue("No files found"))
+    exit(1)
+  }
+  fs.rmSync("public", { recursive: true, force: true })
+  fs.mkdirSync("public", { recursive: true })
+
+  // copy everything in static to public
+  for (const filepath of glob.sync("static/**/*")) {
+    const dst = path.join("public", path.relative("static", filepath))
+    if (fs.lstatSync(filepath).isDirectory()) {
+      fs.mkdirSync(dst)
+      continue
+    }
+    fs.copyFileSync(filepath, dst)
+  }
+
   await esbuild.build({
-    entryPoints: ["templates/reveal.ts"],
+    entryPoints: ["templates/main.ts", "templates/reveal.ts"],
     format: "esm",
     bundle: true,
-    outfile: "public/reveal.js",
+    outdir: "public",
     minify: true,
     sourcemap: true,
     target: "esnext",
@@ -89,17 +101,10 @@ async function main() {
     }
     attributes.slug = slugify(attributes.slug)
 
-    let ogURL = `https://lunch.razzle.cloud/${attributes.slug}/og.svg`
-
-    if (attributes.slug === "index") {
-      ogURL = `https://lunch.razzle.cloud/og.svg`
-    }
-
     let result = ""
     const meta = {
       ...attributes,
       routes,
-      ogURL,
       ...ts,
     }
 
@@ -116,7 +121,7 @@ async function main() {
     } else if (attributes.layout === "slides") {
       result = template({
         ...meta,
-        raw: content.body,
+        body: content.body,
       })
     }
 

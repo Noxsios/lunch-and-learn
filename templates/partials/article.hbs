@@ -1,0 +1,18 @@
+<article class="px-4 ml-auto prose sm:prose-sm md:prose-lg lg:prose-xl flexible-article">
+  <h1>{{title}}</h1>
+  {{#if description}}
+    <p>{{description}}</p>
+  {{/if}}
+  <small>Last modified
+    <strong id="timeago">{{then}}</strong>
+    ago by
+    <em>{{by}}</em></small>
+  <hr />
+{{{body}}}
+</article>
+<nav aria-label="Table of Contents" class="sticky flex flex-col h-full gap-2 p-2 mr-auto top-2">
+  <h3 class="uppercase select-none">on this page</h3>
+  {{#each toc}}
+    <a style="--depth: {{this.depth}}" class="hover:link w-fit" href="#{{this.slug}}">{{this.title}}</a>
+  {{/each}}
+</nav>

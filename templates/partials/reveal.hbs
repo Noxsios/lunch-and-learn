@@ -1,0 +1,30 @@
+<article class="px-4 prose sm:prose-sm md:prose-lg lg:prose-xl max-w-none">
+  <div class="mx-auto max-w-[70rem] w-full">
+    <h1>{{title}}</h1>
+    {{#if description}}
+      <p>{{description}}</p>
+    {{/if}}
+    <small>Last modified
+      <strong id="timeago">{{then}}</strong>
+      ago by
+      <em>{{by}}</em></small>
+    <hr />
+    <blockquote>Click into the slideshow and press <code>f</code> to go fullscreen.</blockquote>
+  </div>
+  <div class="reveal">
+    <div class="slides">
+      <section
+        data-markdown
+        data-separator="^\r?\n-----\r?\n$"
+        data-separator-vertical="^\r?\n---\r?\n$"
+        data-notes="^Notes:"
+        data-charset="utf-8"
+      >
+        <textarea data-template>
+{{{body}}}
+        </textarea>
+      </section>
+    </div>
+  </div>
+  <script type="module" src="/reveal.js"></script>
+</article>
