@@ -19,6 +19,7 @@ body {
   font-family: "Neon", sans-serif;
 }
 
+/* https://github.com/hakimel/reveal.js/blob/master/css/theme/template/exposer.scss */
 .reveal-viewport {
   /* investigate why !important is needed */
   background: var(--fallback-b1, oklch(var(--b1) / 1)) !important;
