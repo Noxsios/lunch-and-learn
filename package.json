@@ -1,9 +1,9 @@
 {
   "name": "lunch-and-learn",
-  "module": "generator/index.ts",
+  "module": "generator/main.ts",
   "type": "module",
   "scripts": {
-    "build": "bun run generator/index.ts && bun run build:tw && bun run generator/og.ts",
+    "build": "bun run generator/main.ts && bun run build:tw && bun run generator/og.ts",
     "build:tw": "bunx tailwindcss -i ./templates/input.css -o ./public/css/tw.css --minify",
     "lint": "eslint . && prettier --check . && markdownlint-cli2 .",
     "lint:fix": "prettier --write . && bunx markdownlint-cli2 --fix ."

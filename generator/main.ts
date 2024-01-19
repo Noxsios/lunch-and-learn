@@ -56,9 +56,9 @@ async function main() {
     fs.copyFileSync(filepath, dst)
   }
 
-  // bundle the main.ts and reveal.ts entrypoints
+  // bundle the index.ts and reveal.ts entrypoints
   await esbuild.build({
-    entryPoints: ["templates/main.ts", "templates/reveal.ts"],
+    entryPoints: ["templates/index.ts", "templates/reveal.ts"],
     format: "esm",
     bundle: true,
     outdir: "public",
@@ -118,7 +118,6 @@ async function main() {
 
       result = template({
         ...meta,
-        ...env,
         body: html,
         toc: env.headers,
       })
