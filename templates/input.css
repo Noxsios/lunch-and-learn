@@ -51,9 +51,22 @@ nav[aria-label="Table of Contents"] a.active {
 }
 
 .flexible-article {
-  min-width: 65ch;
-
   @apply px-4 prose sm:prose-sm md:prose-lg lg:prose-xl;
+}
+
+@media screen and (max-width: 768px) {
+  nav[aria-label="Table of Contents"] {
+    @apply hidden;
+  }
+  .flexible-article {
+    @apply w-full mx-auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .flexible-article {
+    min-width: 65ch;
+  }
 }
 
 .header-anchor {
