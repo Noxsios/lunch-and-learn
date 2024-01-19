@@ -13,6 +13,23 @@ const toggleTheme = () => {
   localStorage.setItem("theme", next)
 }
 
+function findClosestHeading(): Element | null {
+  const headings = $$("article h2, article h3, article h4, article h5, article h6")
+  let closestHeading: Element | null = null
+  let closestDistance = Infinity
+
+  headings.forEach((heading) => {
+    const distance = heading.getBoundingClientRect().top
+
+    if (distance < closestDistance && distance >= 0) {
+      closestHeading = heading
+      closestDistance = distance
+    }
+  })
+
+  return closestHeading
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = $("#theme-toggle") as HTMLInputElement
   themeToggle!.checked = current === "dim"
@@ -26,4 +43,41 @@ document.addEventListener("DOMContentLoaded", () => {
     long: true,
   })
   $("#timeago")!.classList.value = ""
+
+  const getNavLink = (id: string) => {
+    return $(`nav[aria-label='Table of Contents'] a[href="#${id}"]`)
+  }
+
+  if ($("nav[aria-label='Table of Contents']")) {
+    const headings = $$("article h2, article h3, article h4, article h5, article h6")
+    const toc = $$("nav[aria-label='Table of Contents'] a")
+
+    // find the closest heading to the current scroll position
+    const closest = findClosestHeading()
+    if (closest) {
+      // add the active class to the closest heading
+      const id = closest!.getAttribute("id")
+      const navLink = getNavLink(id!)
+      navLink!.classList.add("active")
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target!.getAttribute("id")
+          const navLink = getNavLink(id!)
+
+          if (entry.isIntersecting) {
+            toc.forEach((link) => link.classList.remove("active"))
+            navLink!.classList.add("active")
+          }
+        })
+      },
+      { threshold: 0.5 },
+    )
+
+    headings.forEach((heading) => {
+      observer.observe(heading)
+    })
+  }
 })

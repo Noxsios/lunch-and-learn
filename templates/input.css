@@ -40,6 +40,10 @@ nav[aria-label="Table of Contents"] a {
   padding-inline: calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline);
 }
 
+nav[aria-label="Table of Contents"] a.active  {
+  color: var(--fallback-p, oklch(var(--p) / 1));
+}
+
 #skip {
   clip: rect(0, 0, 0, 0);
   position: fixed;
@@ -47,4 +51,25 @@ nav[aria-label="Table of Contents"] a {
 
 .flexible-article {
   min-width: 65ch;
+
+  @apply px-4 prose sm:prose-sm md:prose-lg lg:prose-xl;
+}
+
+.header-anchor {
+  @apply no-underline hover:underline;
+}
+
+.header-anchor:hover::before {
+  visibility: visible;
+}
+
+/* shamelessly stolen from https://developer.mozilla.org/en-US/docs/ */
+.header-anchor::before {
+  color: var(--fallback-p, oklch(var(--p) / 1));
+  content: "#";
+  display: inline-block;
+  margin-left: -0.8em;
+  text-decoration: none;
+  visibility: hidden;
+  width: 0.8em;
 }

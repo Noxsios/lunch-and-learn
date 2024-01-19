@@ -21,5 +21,6 @@ export default {
   daisyui: {
     themes: ["dim", "light"],
     darkTheme: "dim",
+    logs: false,
   },
 }
