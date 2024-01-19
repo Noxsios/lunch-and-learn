@@ -11,16 +11,16 @@ const mono = fs.readFileSync("static/fonts/PTMono-Regular.ttf")
 if (import.meta.main) {
   const title = "Lunch & Learn"
 
-  const rendered = template({ title })
+  const reactLike = template({ title })
 
-  const json = JSON.parse(rendered)
+  const json = JSON.parse(reactLike)
   const svg = await satori(json, {
     width: 1200,
     height: 630,
     // debug: true,
     fonts: [
       {
-        name: "No Tears",
+        name: "Neon",
         data: neon,
         style: "normal",
       },

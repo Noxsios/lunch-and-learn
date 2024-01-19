@@ -25,4 +25,5 @@ document.addEventListener("DOMContentLoaded", () => {
   $("#timeago")!.textContent = ms(now - then, {
     long: true,
   })
+  $("#timeago")!.classList.value = ""
 })

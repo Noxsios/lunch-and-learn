@@ -18,6 +18,7 @@ type LastModified = {
   filepath: string
   then: number
   by: string
+  createdAt: number
 }
 
 async function main() {
@@ -55,6 +56,7 @@ async function main() {
     fs.copyFileSync(filepath, dst)
   }
 
+  // bundle the main.ts and reveal.ts entrypoints
   await esbuild.build({
     entryPoints: ["templates/main.ts", "templates/reveal.ts"],
     format: "esm",
@@ -69,13 +71,14 @@ async function main() {
     },
   })
 
+  // build the routes
   const routes = timestamps
     .sort((a, b) => {
       // ensure content/_index.md is always first
       if (a.filepath === path.join("content", "_index.md")) {
         return -1
       }
-      return a.then - b.then
+      return a.createdAt - b.createdAt
     })
     .map((t) => {
       const fileContent = fs.readFileSync(t.filepath, "utf-8")
@@ -89,7 +92,7 @@ async function main() {
 
   for (const filepath of files) {
     const fileContent = fs.readFileSync(filepath, "utf-8")
-    const ts = timestamps.find((t) => t.filepath === filepath)
+    let ts = timestamps.find((t) => t.filepath === filepath)
 
     const content = fm(fileContent)
     const attributes = content.attributes as CustomFrontmatter
