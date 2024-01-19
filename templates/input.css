@@ -41,7 +41,7 @@ nav[aria-label="Table of Contents"] a {
   padding-inline: calc(1rem * var(--depth) + var(--pad-inline)) var(--pad-inline);
 }
 
-nav[aria-label="Table of Contents"] a.active  {
+nav[aria-label="Table of Contents"] a.active {
   color: var(--fallback-p, oklch(var(--p) / 1));
 }
 

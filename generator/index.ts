@@ -92,7 +92,7 @@ async function main() {
 
   for (const filepath of files) {
     const fileContent = fs.readFileSync(filepath, "utf-8")
-    let ts = timestamps.find((t) => t.filepath === filepath)
+    const ts = timestamps.find((t) => t.filepath === filepath)
 
     const content = fm(fileContent)
     const attributes = content.attributes as CustomFrontmatter
