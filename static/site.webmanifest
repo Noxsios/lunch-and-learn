@@ -4,8 +4,8 @@
   "short_name": "Lunch and Learn",
   "description": "A lunch and learn app",
   "start_url": "/",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#27282d",
+  "theme_color": "#6a7aff",
   "orientation": "any",
   "display": "standalone",
   "icons": [
