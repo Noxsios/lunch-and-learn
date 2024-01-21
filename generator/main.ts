@@ -4,10 +4,10 @@ import { glob } from "glob"
 import hbs from "handlebars"
 import path from "path"
 import pc from "picocolors"
-import { exit } from "process"
 import { Env, md, slugify } from "./md"
 import esbuild from "esbuild"
 import rt from "reading-time"
+import ms from "ms"
 
 export interface CustomFrontmatter {
   title: string
@@ -23,6 +23,8 @@ type LastModified = {
 }
 
 async function main() {
+  const start = Date.now()
+
   const { stdout } = Bun.spawn(["node", "generator/timestamps.mjs"])
   const lm: LastModified[] = await new Response(stdout).json()
 
@@ -41,8 +43,7 @@ async function main() {
   const files = glob.sync(path.join("content", "*.md"))
 
   if (files.length === 0) {
-    console.log(pc.blue("No files found"))
-    exit(1)
+    throw new Error("No markdown files found in content/")
   }
   fs.rmSync("public", { recursive: true, force: true })
   fs.mkdirSync("public", { recursive: true })
@@ -150,6 +151,10 @@ async function main() {
 
     fs.writeFileSync(path.join(routeDir, "index.html"), result)
   }
+
+  const end = Date.now()
+
+  console.log(pc.green(`Generated ${routes.length} routes in ${ms(end - start)}`))
 }
 
 if (import.meta.main) {

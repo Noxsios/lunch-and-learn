@@ -32,5 +32,5 @@ if (import.meta.main) {
     ],
   })
 
-  fs.writeFileSync(path.join("public", "og.svg"), svg)
+  fs.writeFileSync(path.join("static", "og.svg"), svg)
 }
