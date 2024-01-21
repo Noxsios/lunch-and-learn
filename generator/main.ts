@@ -85,65 +85,66 @@ async function main() {
       const fileContent = fs.readFileSync(t.filepath, "utf-8")
       const content = fm(fileContent)
       const attributes = content.attributes as CustomFrontmatter
-      if (attributes.slug === "index") {
-        attributes.slug = ""
-      }
-      return attributes
+      return { ...attributes, ...t, body: content.body }
     })
 
   const slugs = new Set<string>()
 
-  for (const filepath of files) {
-    const fileContent = fs.readFileSync(filepath, "utf-8")
-    const ts = lm.find((t) => t.filepath === filepath)
+  for (const route of routes) {
+    const { filepath, title, layout, body } = route
 
-    const content = fm(fileContent)
-    const attributes = content.attributes as CustomFrontmatter
+    let { slug } = route
 
-    if (!attributes.title) {
-      throw new Error(`Missing title in ${filepath}`)
-    }
-    if (!attributes.slug) {
+    if (!slug && filepath !== path.join("content", "_index.md")) {
       throw new Error(`Missing slug in ${filepath}`)
     }
-    attributes.slug = slugify(attributes.slug)
-    if (slugs.has(attributes.slug)) {
-      throw new Error(`Duplicate slug ${attributes.slug} in ${filepath}`)
+
+    slug = slugify(slug)
+
+    if (slugs.has(slug)) {
+      throw new Error(`Duplicate slug ${slug} in ${filepath}`)
     }
-    slugs.add(attributes.slug)
+    slugs.add(slug)
+
+    if (!title) {
+      throw new Error(`Missing title in ${filepath}`)
+    }
+
+    const meta = {
+      title,
+      layout,
+      routes: routes.filter((r) => r.slug !== "index"),
+      ts: lm.find((t) => t.filepath === filepath),
+    }
 
     let result = ""
-    const meta = {
-      ...attributes,
-      routes,
-      ...ts,
-    }
 
-    if (!attributes.layout || attributes.layout === "default") {
+    if (!layout || layout === "default") {
       const env: Env = {}
-      const html = md.render(content.body, env)
+      const html = md.render(body, env)
 
       result = template({
         ...meta,
         body: html,
         toc: env.headers,
-        readingTime: rt(content.body).text,
+        readingTime: rt(body).text,
       })
-    } else if (attributes.layout === "slides") {
+    } else if (layout === "slides") {
       result = template({
         ...meta,
-        body: content.body,
+        body,
       })
     } else {
-      throw new Error(`Unknown layout ${attributes.layout} in ${filepath}`)
+      throw new Error(`Unknown layout ${layout} in ${filepath}`)
     }
 
-    if (attributes.slug === "index") {
+    // only _index.md should be written to public/index.html
+    if (slug === "index") {
       fs.writeFileSync(path.join("public", "index.html"), result)
       continue
     }
 
-    const routeDir = path.join("public", attributes.slug)
+    const routeDir = path.join("public", slug)
 
     fs.mkdirSync(routeDir)
 
