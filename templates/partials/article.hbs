@@ -1,4 +1,4 @@
-<article class="ml-auto flexible-article">
+<article class="{{#if toc}}ml-auto{{else}}mx-auto{{/if}} flexible-article">
   <h1>{{title}}</h1>
   {{#if description}}
     <p>{{description}}</p>
@@ -10,9 +10,11 @@
   <hr />
 {{{body}}}
 </article>
+{{#if toc}}
 <nav aria-label="Table of Contents" class="sticky flex flex-col h-full gap-2 p-2 mr-auto top-2">
   <h3 class="uppercase select-none">on this page</h3>
   {{#each toc}}
     <a style="--depth: {{this.depth}}" class="hover:link w-fit" href="#{{this.slug}}">{{this.title}}</a>
   {{/each}}
 </nav>
+{{/if}}

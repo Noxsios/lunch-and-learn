@@ -51,7 +51,7 @@ nav[aria-label="Table of Contents"] a.active {
 }
 
 .flexible-article {
-  @apply px-4 prose sm:prose-sm md:prose-lg lg:prose-xl;
+  @apply px-4 prose sm:prose-sm md:prose-lg lg:prose-xl prose-hr:my-10;
 }
 
 @media screen and (max-width: 768px) {
