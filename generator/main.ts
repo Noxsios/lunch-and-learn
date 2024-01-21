@@ -7,6 +7,7 @@ import pc from "picocolors"
 import { exit } from "process"
 import { Env, md, slugify } from "./md"
 import esbuild from "esbuild"
+import rt from "reading-time"
 
 export interface CustomFrontmatter {
   title: string
@@ -23,7 +24,7 @@ type LastModified = {
 
 async function main() {
   const { stdout } = Bun.spawn(["node", "generator/timestamps.mjs"])
-  const timestamps: LastModified[] = await new Response(stdout).json()
+  const lm: LastModified[] = await new Response(stdout).json()
 
   const partials = glob.sync("templates/partials/*.hbs")
   for (const filepath of partials) {
@@ -72,7 +73,7 @@ async function main() {
   })
 
   // build the routes
-  const routes = timestamps
+  const routes = lm
     .sort((a, b) => {
       // ensure content/_index.md is always first
       if (a.filepath === path.join("content", "_index.md")) {
@@ -90,9 +91,11 @@ async function main() {
       return attributes
     })
 
+  const slugs = new Set<string>()
+
   for (const filepath of files) {
     const fileContent = fs.readFileSync(filepath, "utf-8")
-    const ts = timestamps.find((t) => t.filepath === filepath)
+    const ts = lm.find((t) => t.filepath === filepath)
 
     const content = fm(fileContent)
     const attributes = content.attributes as CustomFrontmatter
@@ -104,6 +107,10 @@ async function main() {
       throw new Error(`Missing slug in ${filepath}`)
     }
     attributes.slug = slugify(attributes.slug)
+    if (slugs.has(attributes.slug)) {
+      throw new Error(`Duplicate slug ${attributes.slug} in ${filepath}`)
+    }
+    slugs.add(attributes.slug)
 
     let result = ""
     const meta = {
@@ -120,12 +127,15 @@ async function main() {
         ...meta,
         body: html,
         toc: env.headers,
+        readingTime: rt(content.body).text,
       })
     } else if (attributes.layout === "slides") {
       result = template({
         ...meta,
         body: content.body,
       })
+    } else {
+      throw new Error(`Unknown layout ${attributes.layout} in ${filepath}`)
     }
 
     if (attributes.slug === "index") {

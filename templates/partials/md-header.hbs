@@ -1,0 +1,12 @@
+<h1>{{title}}</h1>
+{{#if description}}
+  <p>{{description}}</p>
+{{/if}}
+<p class="text-sm">Last modified
+<strong class="text-transparent select-none skeleton" id="timeago">{{then}}</strong>
+ago by
+<em>{{by}}</em></p>
+{{#if readingTime}}
+  <p class="text-sm">{{readingTime}}</p>
+{{/if}}
+<hr />

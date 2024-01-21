@@ -1,14 +1,6 @@
 <article class="flexible-article max-w-none">
   <div class="mx-auto max-w-[70rem] w-full">
-    <h1>{{title}}</h1>
-    {{#if description}}
-      <p>{{description}}</p>
-    {{/if}}
-    <small>Last modified
-      <strong class="text-transparent select-none skeleton" id="timeago">{{then}}</strong>
-      ago by
-      <em>{{by}}</em></small>
-    <hr />
+{{> md-header }}
     <blockquote>Click into the slideshow and press <code>f</code> to go fullscreen.</blockquote>
   </div>
   <div class="reveal">
@@ -17,7 +9,6 @@
         data-markdown
         data-separator="^\r?\n-----\r?\n$"
         data-separator-vertical="^\r?\n---\r?\n$"
-        data-notes="^Notes:"
         data-charset="utf-8"
       >
         <textarea data-template>

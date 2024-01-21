@@ -1,7 +1,6 @@
 {
   // Disable some built-in rules
   "config": {
-    "fenced-code-language": false,
     "first-line-heading": false,
     "line-length": false,
     "single-h1": false,
