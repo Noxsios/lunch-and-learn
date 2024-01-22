@@ -69,6 +69,10 @@ nav[aria-label="Table of Contents"] a.active {
   }
 }
 
+article h2, article h3, article h4, article h5, article h6 {
+  @apply scroll-mt-4;
+}
+
 .header-anchor {
   @apply no-underline hover:underline;
 }
