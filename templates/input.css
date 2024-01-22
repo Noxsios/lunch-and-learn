@@ -54,6 +54,10 @@ nav[aria-label="Table of Contents"] a.active {
   @apply px-4 prose sm:prose-sm md:prose-lg lg:prose-xl prose-hr:my-10;
 }
 
+html[data-layout="slides"] .flexible-article {
+  @apply max-w-none;
+}
+
 @media screen and (max-width: 768px) {
   nav[aria-label="Table of Contents"] {
     @apply hidden;
@@ -73,6 +77,7 @@ article h2, article h3, article h4, article h5, article h6 {
   @apply scroll-mt-4;
 }
 
+/* TODO: do this when it renders w/ markdown-it instead of needing this */
 .header-anchor {
   @apply no-underline hover:underline;
 }
