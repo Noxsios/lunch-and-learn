@@ -87,3 +87,15 @@ nav[aria-label="Table of Contents"] a.active {
   visibility: hidden;
   width: 0.8em;
 }
+
+#progress::-moz-progress-bar {
+  border-radius: 0;
+}
+
+#progress::-webkit-progress-bar {
+  border-radius: 0;
+}
+
+#progress::-webkit-progress-value {
+  border-radius: 0;
+}

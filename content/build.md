@@ -26,8 +26,6 @@ I could have also built a bespoke solution in Svelte, but that seemed to be over
 
 At the end of the day all I really wanted was to take a directory of Markdown files and turn them into an educational website. So I decided to build my own simple SSG.
 
-> The goal of this SSG was never to scale it to become its own product. It was just a fun project to build something simple and minimal.
-
 ## Inspiration and previous works
 
 Many of the pieces of this project were inspired by other projects I've worked on or seen.
@@ -65,6 +63,12 @@ def get_revision_date(self, abspath):
 ```
 
 More recently, I was looking at themes for Zola and came across [adidoks](https://adidoks.netlify.app/docs/getting-started/introduction/). I really liked it's use of minimal color, wide spacing, and clear typography. I used it as inspiration for the web layout of this site.
+
+Honorable mentions:
+
+- Mozilla MDN docs
+- Astro docs
+- Tailwindcss docs
 
 ## Core features
 

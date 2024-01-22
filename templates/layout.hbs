@@ -4,6 +4,7 @@
 </head>
 <body>
   <a id="skip" href="#_top">Skip to content</a>
+{{#ifEquals layout 'default'}}<progress id="progress" class="sticky top-0 rounded-none progress" value="0" max="100"></progress>{{/ifEquals}}
 {{> nav}}
   <main class="flex justify-around flex-1 py-6 mb-40">
 {{#ifEquals layout 'slides'}}

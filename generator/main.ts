@@ -123,6 +123,7 @@ async function main() {
     let result = ""
 
     if (!layout || layout === "default") {
+      meta.layout = "default"
       const env: Env = {}
       const html = md.render(body, env)
 

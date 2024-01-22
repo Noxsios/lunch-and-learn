@@ -48,6 +48,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return $(`nav[aria-label='Table of Contents'] a[href="#${id}"]`)
   }
 
+  const prog = $("#progress") as HTMLProgressElement
+
+  if (prog) {
+    const totalHeight = document.body.scrollHeight - window.innerHeight
+
+    window.addEventListener("scroll", () => {
+      prog.value = (window.scrollY / totalHeight) * 100
+    })
+  }
+
   if ($("nav[aria-label='Table of Contents']")) {
     const headings = $$("article h2, article h3, article h4, article h5, article h6")
     const toc = $$("nav[aria-label='Table of Contents'] a")
