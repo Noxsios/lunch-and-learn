@@ -2,6 +2,10 @@ import hljs from "highlight.js"
 import markdownit from "markdown-it"
 import anchor from "markdown-it-anchor"
 import pc from "picocolors"
+import path from "path"
+import fs from "fs"
+import fm from "front-matter"
+import { CustomFrontmatter } from "./main"
 
 export const md = markdownit({
   linkify: true,
@@ -23,6 +27,7 @@ export const md = markdownit({
     permalink: anchor.permalink.headerLink(),
   })
   .use(extractHeadersPlugin)
+  .use(fixInternalLinksPlugin)
 
 export const slugify = (s: string): string => {
   return encodeURIComponent(String(s).trim().toLowerCase().replace(/\s+/g, "-"))
@@ -77,6 +82,42 @@ function extractHeadersPlugin(md: markdownit): void {
     }
 
     // Return the original render output
+    return defaultRender(tokens, idx, options, env, self)
+  }
+}
+
+// plugin to fix links to internal .md files to go to the generated /<slug>/ path
+function fixInternalLinksPlugin(md: markdownit): void {
+  const defaultRender =
+    md.renderer.rules.link_open ||
+    ((tokens, idx, options, env, self) => {
+      return self.renderToken(tokens, idx, options)
+    })
+
+  md.renderer.rules.link_open = (tokens, idx, options, env: Env, self) => {
+    const href = tokens[idx].attrGet("href")
+    if (href && href.endsWith(".md")) {
+      const filepath = path.join("content", href)
+
+      // fail if the filepath is outside of the content directory
+      if (!filepath.startsWith("content")) {
+        throw new Error(`Invalid link to ${filepath}`)
+      }
+
+      // fail if the file doesn't exist
+      if (!fs.existsSync(filepath)) {
+        throw new Error(`File ${filepath} does not exist`)
+      }
+
+      if (filepath === path.join("content", "_index.md")) {
+        tokens[idx].attrSet("href", "/")
+      } else {
+        const content = fm(fs.readFileSync(filepath, "utf-8"))
+        const attributes = content.attributes as CustomFrontmatter
+        const slug = slugify(attributes.slug || "")
+        tokens[idx].attrSet("href", `/${slug}`)
+      }
+    }
     return defaultRender(tokens, idx, options, env, self)
   }
 }
