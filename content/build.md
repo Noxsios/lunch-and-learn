@@ -68,10 +68,14 @@ More recently, I was looking at themes for Zola and came across [adidoks](https:
 
 ## Core features
 
-- Markdown parsing
 - Content as either a blog post or a slide deck
-- Templating
-- Git integration
+  - YAML front matter via `front-matter`
+  - Articles rendered w/ `markdown-it`, `markdown-it-anchor` and `highlight.js`
+  - Slides rendered w/ `reveal.js`
+  - TypeScript compiled w/ `esbuild`
+  - Reading time estimation via `reading-time`
+- Templating via `handlebars`
+- Git integration via `isomorphic-git`, client side "timeago" via `ms`
 - Simple layout
 - Fast build times
 - Easy to use

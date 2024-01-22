@@ -94,6 +94,8 @@ async function main() {
   for (const route of routes) {
     const { filepath, title, layout, body } = route
 
+    console.log(pc.gray(`Generating ${filepath}`))
+
     let { slug } = route
 
     if (!slug && filepath !== path.join("content", "_index.md")) {
@@ -154,7 +156,8 @@ async function main() {
 
   const end = Date.now()
 
-  console.log(pc.green(`Generated ${routes.length} routes in ${ms(end - start)}`))
+  console.log(pc.gray(`Generated ${routes.length} routes`))
+  console.log(pc.green(`Done in ${ms(end - start)}`))
 }
 
 if (import.meta.main) {
