@@ -56,12 +56,6 @@ It was originally a side project that I was working on in my spare time, so the 
 
 The compiler was written in Python and used `mkdocs` as the base SSG. I also used `mkdocs-material` as the theme, and `mkdocs-git-revision-date-localized-plugin` to show Git information in the docs.
 
-```python
-# source: https://github.com/Noxsios/bb-docs-compiler/blob/d5da5b6a90108570c018b98ac30bc9da6807c610/docs-compiler/repo.py#L46-47
-def get_revision_date(self, abspath):
-    return self.repo.git.log(abspath, n=1, date="short", format="%ad by %cn")
-```
-
 More recently, I was looking at themes for Zola and came across [adidoks](https://adidoks.netlify.app/docs/getting-started/introduction/). I really liked it's use of minimal color, wide spacing, and clear typography. I used it as inspiration for the web layout of this site.
 
 Honorable mentions:

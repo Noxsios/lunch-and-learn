@@ -19,7 +19,7 @@ for (const filepath of files) {
   let firstCommit
   try {
     latestCommit = await git.log({ fs, dir, filepath, depth: 1 }).then((log) => log[0].commit)
-    firstCommit = await git.log({ fs, dir, filepath, depth: 1 }).then((log) => log.at(-1).commit)
+    firstCommit = await git.log({ fs, dir, filepath }).then((log) => log.at(-1).commit)
   } catch (err) {
     if (err instanceof git.Errors.NotFoundError) {
       // File is not tracked by git
@@ -30,8 +30,7 @@ for (const filepath of files) {
   }
   const by = latestCommit.author.name
   const timestamp = latestCommit.author.timestamp
-  const createdAt = firstCommit.author.timestamp
-
+  const createdAt = new Date(firstCommit.author.timestamp * 1000).getTime()
   const then = new Date(timestamp * 1000).getTime()
 
   stdout = [...stdout, { filepath, then, by, createdAt }]
