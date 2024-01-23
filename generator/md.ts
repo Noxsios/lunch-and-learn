@@ -96,7 +96,7 @@ function fixInternalLinksPlugin(md: markdownit): void {
 
   md.renderer.rules.link_open = (tokens, idx, options, env: Env, self) => {
     const href = tokens[idx].attrGet("href")
-    if (href && href.endsWith(".md")) {
+    if (href && href.endsWith(".md") && !href.startsWith("http")) {
       const filepath = path.join("content", href)
 
       // fail if the filepath is outside of the content directory
