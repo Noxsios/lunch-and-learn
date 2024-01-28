@@ -77,7 +77,7 @@ article h2, article h3, article h4, article h5, article h6 {
   @apply scroll-mt-4;
 }
 
-/* TODO: do this when it renders w/ markdown-it instead of needing this */
+/* header-anchor is the default class that markdown-it-anchor assigns */
 .header-anchor {
   @apply no-underline hover:underline;
 }

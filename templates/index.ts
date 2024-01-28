@@ -3,7 +3,7 @@ import ms from "ms"
 export const $ = document.querySelector.bind(document)
 export const $$ = document.querySelectorAll.bind(document)
 
-// fire this code before everything so there is no FUOC
+// fire this code before everything so there is no FOUC
 const userPref = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dim" : "light"
 const current = localStorage.getItem("theme") || userPref || "light"
 document.documentElement.setAttribute("data-theme", current)
