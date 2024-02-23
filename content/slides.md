@@ -2,6 +2,7 @@
 title: Gettysburg
 slug: gettysburg
 layout: slides
+draft: true
 ---
 
 ### The Battle of Gettysburg

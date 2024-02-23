@@ -13,9 +13,10 @@ export interface CustomFrontmatter {
   title: string
   slug: string
   layout: "default" | "slides"
+  draft?: boolean
 }
 
-type LastModified = {
+type GitInfo = {
   filepath: string
   then: number
   by: string
@@ -26,7 +27,7 @@ async function main() {
   const start = Date.now()
 
   const { stdout } = Bun.spawn(["node", "generator/timestamps.mjs"])
-  const lm: LastModified[] = await new Response(stdout).json()
+  const gitinfo: GitInfo[] = await new Response(stdout).json()
 
   const partials = glob.sync("templates/partials/*.hbs")
   for (const filepath of partials) {
@@ -74,7 +75,7 @@ async function main() {
   })
 
   // build the routes
-  const routes = lm
+  const routes = gitinfo
     .sort((a, b) => {
       // ensure content/_index.md is always first
       if (a.filepath === path.join("content", "_index.md")) {
@@ -82,12 +83,13 @@ async function main() {
       }
       return a.createdAt - b.createdAt
     })
-    .map((t) => {
-      const fileContent = fs.readFileSync(t.filepath, "utf-8")
+    .map((r) => {
+      const fileContent = fs.readFileSync(r.filepath, "utf-8")
       const content = fm(fileContent)
       const attributes = content.attributes as CustomFrontmatter
-      return { ...attributes, ...t, body: content.body }
+      return { ...attributes, ...r, body: content.body }
     })
+    .filter((r) => !r.draft)
 
   const slugs = new Set<string>()
 
@@ -117,7 +119,7 @@ async function main() {
       title,
       layout,
       routes: routes.filter((r) => r.slug !== "index"),
-      ts: lm.find((t) => t.filepath === filepath),
+      ts: gitinfo.find((t) => t.filepath === filepath),
     }
 
     let result = ""
