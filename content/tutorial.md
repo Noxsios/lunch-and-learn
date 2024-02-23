@@ -5,7 +5,11 @@ slug: tutorial
 
 ## Overview
 
-This page is a short tutorial on how to use this site.
+This page is a short tutorial on how to use this site. An interactive CLI is available to help you author new content. To use it, run the following command:
+
+```bash
+bun hack/new.ts
+```
 
 ## Front Matter
 
