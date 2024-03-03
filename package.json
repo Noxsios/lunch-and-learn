@@ -12,7 +12,7 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
     "@types/markdown-it": "^13.0.7",
-    "@types/reveal.js": "^4.4.8",
+    "@types/reveal.js": "^5.0.1",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "bun-types": "latest",
