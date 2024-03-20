@@ -67,11 +67,7 @@ function extractHeadersPlugin(md: markdownit): void {
     // Find the corresponding text token; usually the next token is the text token for headers
     const titleToken = tokens[idx + 1]
     if (titleToken.type === "inline") {
-      const title =
-        titleToken.children
-          ?.filter((t) => t.type === "text")
-          .map((t) => t.content)
-          .join("") || ""
+      const title = titleToken.children?.map((t) => t.content).join("") || ""
       const slug = slugify(title)
 
       // Initialize headers array in the environment object
