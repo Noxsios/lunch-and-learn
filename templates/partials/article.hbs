@@ -3,10 +3,10 @@
 {{{body}}}
 </article>
 {{#if toc}}
-<nav aria-label="Table of Contents" class="sticky flex flex-col h-full gap-2 p-2 mr-auto top-2">
+<nav aria-label="Table of Contents" class="sticky flex flex-col h-full max-w-sm gap-2 p-2 mr-auto top-2">
   <h3 class="uppercase select-none">on this page</h3>
   {{#each toc}}
-    <a style="--depth: {{this.depth}}" class="hover:link w-fit" href="#{{this.slug}}">{{this.title}}</a>
+    <a style="--depth: {{this.depth}}" class="transition-all hover:link w-fit hover:opacity-100 opacity-65" href="#{{this.slug}}">{{this.title}}</a>
   {{/each}}
 </nav>
 {{/if}}
