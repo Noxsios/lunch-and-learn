@@ -43,6 +43,7 @@ nav[aria-label="Table of Contents"] a {
 
 nav[aria-label="Table of Contents"] a.active {
   color: var(--fallback-p, oklch(var(--p) / 1));
+  opacity: 100;
 }
 
 #skip {

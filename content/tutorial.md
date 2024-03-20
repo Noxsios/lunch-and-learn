@@ -33,6 +33,15 @@ This site uses [`markdown-it`](https://github.com/markdown-it/markdown-it) for r
 - [Markdown tutorial](https://commonmark.org/help/tutorial/)
 - [Quick reference](https://commonmark.org/help/)
 
+## Images
+
+For right now, images are stored in the `static` directory, and placed within a directory named the same as the page's [`slug`](#front-matter). To include an image in a page, use the following syntax:
+
+```markdown
+<!-- The below is an _absolute_ link to the image -->
+![alternate title](/<slug>/<image>)
+```
+
 ## Slides
 
 This site uses [`reveal.js`](https://revealjs.com/) for rendering slides. To create a slide deck, create a page with the `slides` layout and use the following syntax:
