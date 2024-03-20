@@ -11,5 +11,5 @@ All lunch and learns take place at 1300 CT.
 | 2/7/2024  | Wayne Starr             | [Building Engagement with Pixel Art (Aseprite)](./sprites.md) |               |
 | 2/21/2024 | Eddie Zaneski           | Syscalls for fun and profit                                   |               |
 | 3/6/2024  |                         |                                                               |               |
-| 3/20/2024 |                         |                                                               |               |
+| 3/20/2024 | Blake Burkhart          | [A few ways to hack stuff on GitHub](./github-security.md)    |               |
 | 4/3/2024  |                         |                                                               |               |

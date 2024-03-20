@@ -152,7 +152,9 @@ async function main() {
 
     const routeDir = path.join("public", slug)
 
-    fs.mkdirSync(routeDir)
+    if (!fs.existsSync(routeDir)) {
+      fs.mkdirSync(routeDir)
+    }
 
     fs.writeFileSync(path.join(routeDir, "index.html"), result)
   }
